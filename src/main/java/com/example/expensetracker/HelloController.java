@@ -37,6 +37,17 @@ class User implements Serializable {
         return password;
     }
 }
+class AppendableObjectOutputStream extends ObjectOutputStream {
+    public AppendableObjectOutputStream(OutputStream out) throws IOException {
+        super(out);
+    }
+
+    @Override
+    protected void writeStreamHeader() throws IOException {
+        // do not write a header, but reset:
+        reset();
+    }
+}
 public class HelloController {
     private Stage stage;
     @FXML
@@ -197,8 +208,9 @@ public class HelloController {
                     username = getUsername(emailFieldSU.getText());
                     User user = new User(username, passwordFieldSU.getText(),Integer.MAX_VALUE);
                     try {
+                        boolean append = new File("admin.txt").length() > 0;
                         FileOutputStream fileOut = new FileOutputStream(new File("admin.txt"), true);
-                        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                        ObjectOutputStream out = append ? new AppendableObjectOutputStream(fileOut) : new ObjectOutputStream(fileOut);
                         out.writeObject(user);
                         out.close();
                         fileOut.close();
