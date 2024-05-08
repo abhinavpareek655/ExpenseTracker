@@ -15,6 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -61,11 +63,14 @@ class AppendableObjectOutputStream extends ObjectOutputStream {
 }
 public class HelloController{
     private static User user;
+    private static String userName;
     private Stage stage;
     @FXML
     TextField OTPField;
     @FXML
     TextField emailFieldSU;
+    @FXML
+    TextField emailFieldRP;
     @FXML
     TextField emailField;
     @FXML
@@ -228,7 +233,7 @@ public class HelloController{
             ObjectInputStream in = new ObjectInputStream(fileIn);
             while (true) {
                 User user = (User) in.readObject();
-                System.out.println(user);
+//                System.out.println(user);
                 if (user.getUsername().equals(username)) {
                     return true;
                 }
@@ -267,13 +272,6 @@ public class HelloController{
                         new Thread(() -> {
                             sendEmail(otp,"OTP for Expanse Tracker",email,"2022btcse002@curaj.ac.in");
                         }).start();
-////                        boolean append = new File("admin.txt").length() > 0;
-////                        FileOutputStream fileOut = new FileOutputStream(new File("admin.txt"), true);
-////                        ObjectOutputStream out = append ? new AppendableObjectOutputStream(fileOut) : new ObjectOutputStream(fileOut);
-////                        out.writeObject(user);
-////                        out.close();
-////                        fileOut.close();
-////                        errorLabelSU.setText("User registered successfully!");
                         Parent root= FXMLLoader.load(getClass().getResource("OTPPage.fxml"));
                         stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                         Scene scene = new Scene(root);
@@ -306,25 +304,110 @@ public class HelloController{
         }
     }
     public void onVerifyButton(ActionEvent actionEvent){
-        if(OTPField.getText().equals(otp)){
-//            System.out.println("OTP verified");
-            try{
+    if(OTPField.getText().equals(otp)){
+        try{
+            if(isUserExist(userName)){
+                ArrayList<User> users = new ArrayList<>();
+
+// Read users from admin.txt
+try (FileInputStream fileIn = new FileInputStream("admin.txt");
+     ObjectInputStream in = new ObjectInputStream(fileIn)) {
+    while (true) {
+        try {
+            User readUser = (User) in.readObject();
+            users.add(readUser);
+        } catch (EOFException e) {
+            // End of file reached
+            break;
+        }
+    }
+} catch (IOException | ClassNotFoundException e) {
+    e.printStackTrace();
+}
+
+// Write users back to admin.txt, excluding the one with the same username as userName
+try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
+     ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+    for (User user : users) {
+        if (!user.getUsername().equals(userName)) {
+            out.writeObject(user);
+        }
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
+
+
+//                if(adminFile.delete()){
+//                    if(!tempFile.renameTo(adminFile)){
+//                        System.out.println("Could not rename file");
+//                    }
+//                } else {
+//                    System.out.println("Could not delete file");
+//                }
+
+                Parent root = FXMLLoader.load(getClass().getResource("SignUpPage.fxml"));
+                stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Expanse Tracker");
+                stage.show();
+                System.out.println(userName);
+            }
+            else {
                 boolean append = new File("admin.txt").length() > 0;
                 FileOutputStream fileOut = new FileOutputStream(new File("admin.txt"), true);
                 ObjectOutputStream out = append ? new AppendableObjectOutputStream(fileOut) : new ObjectOutputStream(fileOut);
                 out.writeObject(user);
                 out.close();
                 fileOut.close();
+
                 Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
-                stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+                stage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.setTitle("Expanse Tracker");
                 stage.show();
             }
-            catch (Exception e){
-                System.out.println(e);
-            }
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
+}
+    public void onForgotPasswordButton(ActionEvent actionEvent){
+        try{
+            Parent root= FXMLLoader.load(getClass().getResource("ResetPage.fxml"));
+            stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
+    public void onContinueButton(ActionEvent actionEvent){
+        String email = emailFieldRP.getText();
+
+        try {
+            userName = getUsername(email);
+            otp = generateOTP();
+            new Thread(() -> {
+                sendEmail(otp,"OTP for Expanse Tracker",email,"2022btcse002@curaj.ac.in");
+            }).start();
+            Parent root= FXMLLoader.load(getClass().getResource("OTPPage.fxml"));
+            stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        } catch (IOException e) {
+            System.out.println("admin file not found");
+        }
+        catch (Exception e){
+            System.out.println(e);
         }
     }
 }

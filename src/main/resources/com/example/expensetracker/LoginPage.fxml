@@ -24,7 +24,7 @@
             <Font size="18.0" />
          </font>
       </TextField>
-      <Button layoutX="300.0" layoutY="240.0" mnemonicParsing="false" text="Forgot Password?" />
+      <Button layoutX="300.0" layoutY="240.0" mnemonicParsing="false" onAction="#onForgotPasswordButton" text="Forgot Password?" />
       <Button layoutX="190.0" layoutY="283.0" mnemonicParsing="false" onAction="#onLoginButton" prefHeight="40.0" prefWidth="223.0" text="Login">
          <font>
             <Font size="18.0" />
