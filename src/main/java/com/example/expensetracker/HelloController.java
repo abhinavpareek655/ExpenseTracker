@@ -410,4 +410,17 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
             System.out.println(e);
         }
     }
+    public void onRPSignUpButton(ActionEvent actionEvent){
+        try{
+            Parent root= FXMLLoader.load(getClass().getResource("SignUpPage.fxml"));
+            stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
 }
