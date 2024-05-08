@@ -27,7 +27,7 @@ class User implements Serializable {
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", budget=" + budget +
-                '}';
+                "}\n";
     }
 
     public String getUsername() {
@@ -74,10 +74,10 @@ public class HelloController {
             ObjectInputStream in = new ObjectInputStream(fileIn);
             while (true) {
                 User user = (User) in.readObject();
-                System.out.println(user);
+//                System.out.println(user);
                 if (user.getUsername().equals(username)) {
                     password = user.getPassword();
-                    break;
+                    break; // Break the loop as soon as the user is found
                 }
             }
         } catch (EOFException e) {
