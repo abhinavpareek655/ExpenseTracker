@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.HelloController">
    <children>
       <Label layoutX="246.0" layoutY="36.0" text="Sign up" textAlignment="CENTER">
@@ -15,27 +14,28 @@
          </font>
       </Label>
       <Label layoutX="246.0" layoutY="82.0" text="Create your account" />
-      <TextField fx:id="emailField" layoutX="188.0" layoutY="120.0" promptText="Email ID">
+      <TextField fx:id="emailFieldSU" layoutX="188.0" layoutY="120.0" promptText="Email ID">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="passwordField" layoutX="188.0" layoutY="180.0" promptText="Password">
+      <TextField fx:id="passwordFieldSU" layoutX="188.0" layoutY="180.0" promptText="Password">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <TextField fx:id="passwordField1" layoutX="188.0" layoutY="240.0" promptText="Confirm Password">
+      <TextField fx:id="confirmPasswordFieldSU" layoutX="188.0" layoutY="240.0" promptText="Confirm Password">
          <font>
             <Font size="18.0" />
          </font>
       </TextField>
-      <Button layoutX="188.0" layoutY="299.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="223.0" text="Sign up">
+      <Button layoutX="188.0" layoutY="299.0" mnemonicParsing="false" onAction="#onSignUpButton" prefHeight="40.0" prefWidth="223.0" text="Sign up">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
       <Label layoutX="205.0" layoutY="361.0" text="Already have an account?" />
-      <Button layoutX="353.0" layoutY="357.0" mnemonicParsing="false" text="Login" />
+      <Button fx:id="RegisterToLogin" layoutX="353.0" layoutY="357.0" mnemonicParsing="false" onAction="#onRegisterToLogin" text="Login" />
+      <Label fx:id="errorLabelSU" alignment="CENTER" layoutX="-1.0" layoutY="100.0" prefHeight="18.0" prefWidth="600.0" textFill="#b10000" />
    </children>
 </AnchorPane>

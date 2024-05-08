@@ -31,7 +31,7 @@
          </font>
       </Button>
       <Label layoutX="205.0" layoutY="339.0" text="Don't have an account?" />
-      <Button layoutX="339.0" layoutY="335.0" mnemonicParsing="false" text="Register" />
-      <Label fx:id="alertText" layoutX="230.0" layoutY="99.0" textFill="#c10000" />
+      <Button layoutX="339.0" layoutY="335.0" mnemonicParsing="false" onAction="#onRegisterButton" text="Register" />
+      <Label fx:id="errorLable" alignment="CENTER" layoutX="1.0" layoutY="99.0" prefHeight="18.0" prefWidth="600.0" textFill="#c10000" />
    </children>
 </AnchorPane>
