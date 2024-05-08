@@ -32,6 +32,6 @@
          </font>
       </Button>
       <Label layoutX="188.0" layoutY="330.0" text="not your email address?" />
-      <Button fx:id="verifyToSignup" layoutX="319.0" layoutY="326.0" mnemonicParsing="false" onAction="#onChangeEmailButton" text="Change email" />
+      <Button layoutX="319.0" layoutY="326.0" mnemonicParsing="false" onAction="#onChangeEmailButton" text="Change email" />
    </children>
 </AnchorPane>

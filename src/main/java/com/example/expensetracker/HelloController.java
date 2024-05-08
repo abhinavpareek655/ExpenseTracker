@@ -8,10 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
@@ -64,6 +61,7 @@ class AppendableObjectOutputStream extends ObjectOutputStream {
 public class HelloController{
     private static User user;
     private static String userName;
+    private static File userFile;
     private Stage stage;
     @FXML
     TextField OTPField;
@@ -182,6 +180,7 @@ public class HelloController{
                 boolean loginStatus = login(email, password);
                 if (loginStatus) {
                     try {
+                        userFile = new File(getUsername(email)+".txt");
                         Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
                         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         Scene scene = new Scene(root);
@@ -421,6 +420,24 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
         }
         catch (Exception e){
             System.out.println(e);
+        }
+    }
+    public void onLogOutButton(ActionEvent actionEvent){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Logout");
+        alert.setHeaderText("Are you sure you want to logout?");
+        alert.setContentText("Press OK to logout, Cancel to stay on the page");
+        if(alert.showAndWait().get()== ButtonType.OK){
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
+                stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.setTitle("Expanse Tracker");
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }
