@@ -13,10 +13,7 @@ import javafx.stage.Stage;
 import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Properties;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -47,6 +44,26 @@ class User implements Serializable {
         return password;
     }
 }
+class Expense implements Serializable{
+    private String category;
+    private Date date;
+    private int amount;
+    public Expense(String category,Date date, int amount) {
+        this.category = category;
+        this.date = date;
+        this.amount = amount;
+    }
+
+    @Override
+    public String toString() {
+        return "expense{" +
+                "category='" + category + '\'' +
+                ", date='" + date + '\'' +
+                ", amount='" + amount + '\'' +
+                "}\n";
+    }
+
+}
 class AppendableObjectOutputStream extends ObjectOutputStream {
     public AppendableObjectOutputStream(OutputStream out) throws IOException {
         super(out);
@@ -61,8 +78,13 @@ class AppendableObjectOutputStream extends ObjectOutputStream {
 public class HelloController{
     private static User user;
     private static String userName;
-    private static File userFile;
+    private static FileOutputStream userFile;
+    private static Expense expense;
     private Stage stage;
+    @FXML
+    Label NumberFormatExceptionLabel;
+    @FXML
+    TextField amountField;
     @FXML
     TextField OTPField;
     @FXML
@@ -180,7 +202,7 @@ public class HelloController{
                 boolean loginStatus = login(email, password);
                 if (loginStatus) {
                     try {
-                        userFile = new File(getUsername(email)+".txt");
+                        userFile = new FileOutputStream(getUsername(email)+".txt");
                         Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
                         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         Scene scene = new Scene(root);
@@ -438,6 +460,122 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+    public void onAddExpenseButton(ActionEvent actionEvent){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("AddingPage.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void EntertainmentButton(ActionEvent actionEvent){
+        try {
+            int amount = Integer.parseInt(amountField.getText());
+            expense = new Expense("Entertainment",new Date(),amount);
+            ObjectOutputStream out = new ObjectOutputStream(userFile);
+            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
+            OS.writeObject(expense);
+            Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (NumberFormatException e){
+            NumberFormatExceptionLabel.setText("Enter valid amount");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }public void EducationButton(ActionEvent actionEvent){
+        try {
+            int amount = Integer.parseInt(amountField.getText());
+            expense = new Expense("Education",new Date(),amount);
+            ObjectOutputStream out = new ObjectOutputStream(userFile);
+            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
+            OS.writeObject(expense);
+            Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (NumberFormatException e){
+            NumberFormatExceptionLabel.setText("Enter valid amount");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void FoodButton(ActionEvent actionEvent){
+        try {
+            int amount = Integer.parseInt(amountField.getText());
+            expense = new Expense("Food",new Date(),amount);
+            ObjectOutputStream out = new ObjectOutputStream(userFile);
+            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
+            OS.writeObject(expense);
+            Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (NumberFormatException e){
+            NumberFormatExceptionLabel.setText("Enter valid amount");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void HealthButton(ActionEvent actionEvent){
+        try {
+            int amount = Integer.parseInt(amountField.getText());
+            expense = new Expense("Health",new Date(),amount);
+            ObjectOutputStream out = new ObjectOutputStream(userFile);
+            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
+            OS.writeObject(expense);
+            Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (NumberFormatException e){
+            NumberFormatExceptionLabel.setText("Enter valid amount");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public void TravelButton(ActionEvent actionEvent){
+        try {
+            int amount = Integer.parseInt(amountField.getText());
+            expense = new Expense("Travel",new Date(),amount);
+            ObjectOutputStream out = new ObjectOutputStream(userFile);
+            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
+            OS.writeObject(expense);
+            Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (NumberFormatException e){
+            NumberFormatExceptionLabel.setText("Enter valid amount");
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

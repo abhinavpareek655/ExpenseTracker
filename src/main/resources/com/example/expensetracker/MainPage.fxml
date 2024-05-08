@@ -23,7 +23,7 @@
          </font>
       </Label>
       <Button layoutX="54.0" layoutY="14.0" mnemonicParsing="false" onAction="#onLogOutButton" text="Log out" />
-      <Button layoutX="53.0" layoutY="101.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="232.0" text="Add an Expense">
+      <Button layoutX="53.0" layoutY="101.0" mnemonicParsing="false" onAction="#onAddExpenseButton" prefHeight="37.0" prefWidth="232.0" text="Add an Expense">
          <font>
             <Font size="16.0" />
          </font>
