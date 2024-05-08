@@ -13,7 +13,7 @@ import java.io.*;
 
 class User implements Serializable {
     private String username;
-    private transient String password;
+    private String password;
     private int budget;
     public User(String username, String password, int budget) {
         this.username = username;
@@ -63,6 +63,7 @@ public class HelloController {
             ObjectInputStream in = new ObjectInputStream(fileIn);
             while (true) {
                 User user = (User) in.readObject();
+                System.out.println(user);
                 if (user.getUsername().equals(username)) {
                     password = user.getPassword();
                     break;
@@ -70,32 +71,44 @@ public class HelloController {
             }
         } catch (EOFException e) {
             // End of file reached
+            System.out.println("User not found");
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println("admin file not found");
         }
+
         return password;
     }
-    private FileInputStream login(String email, String password) throws FileNotFoundException {
-        String username = getUsername(email);
-        String correctPassword = getPassword(username);
-        if (password.equals(correctPassword)) {
-            System.out.println("Login successful");
-            return new FileInputStream(username + ".txt");
-        } else {
-            System.out.println("Login failed");
-            return null;
+    private boolean login(String email, String password) {
+        try{
+            String username = getUsername(email);
+            String correctPassword = getPassword(username);
+            if (password.equals(correctPassword)) {
+                System.out.println("Login successful");
+                return true;
+            } else {
+                System.out.println("password incorrect");
+                return false;
+            }
+        }
+        catch (Exception e){
+            System.out.println("user not found");
+            return false;
         }
     }
 
     public void onLoginButton(ActionEvent actionEvent){
         if(!emailField.getText().isEmpty()) {
-            String email = emailField.getText();
-            if (!email.contains("@"))
+            if (!emailField.getText().contains("@"))
                 errorLabel.setText("Invalid email!");
+            else{
+                errorLabel.setText("");
+            }
+            String email = emailField.getText();
             String password = passwordField.getText();
             try {
-                FileInputStream userFile = login(email, password);
-                if (userFile != null) {
+                boolean loginStatus = login(email, password);
+                if (loginStatus) {
                     try {
                         Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
                         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -109,10 +122,8 @@ public class HelloController {
                 } else {
                     errorLabel.setText("Invalid email or password!");
                 }
-            } catch (FileNotFoundException e) {
-                errorLabel.setText("Invalid email or password!");
-                System.out.println(e);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 errorLabel.setText("Invalid email or password!");
                 System.out.println(e);
             }
@@ -150,39 +161,48 @@ public class HelloController {
             ObjectInputStream in = new ObjectInputStream(fileIn);
             while (true) {
                 User user = (User) in.readObject();
+                System.out.println(user);
                 if (user.getUsername().equals(username)) {
                     return true;
                 }
             }
         } catch (EOFException e) {
             // End of file reached
+            System.out.println("user not found");
+            return false;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+            System.out.println("admin file not found");
+            return false;
         }
-        return false;
     }
     public void onSignUpButton(ActionEvent actionEvent){
         String email = emailFieldSU.getText();
         if(!email.contains("@"))
             errorLabelSU.setText("Invalid email!");
+        else
+            errorLabelSU.setText("");
+
         String username = getUsername(email);
         if(isUserExist(username)){
             errorLabelSU.setText("User already exists!");
-        }else{
+        }
+        else{
+            errorLabelSU.setText("");
             if(passwordFieldSU.getText().length()<8){
                 errorLabelSU.setText("Password must be at least 8 characters long!");
             }
             else {
                 if (passwordFieldSU.getText().equals(confirmPasswordFieldSU.getText())) {
-                    User user = new User(username, passwordFieldSU.getText(), 0);
+                    username = getUsername(emailFieldSU.getText());
+                    User user = new User(username, passwordFieldSU.getText(),Integer.MAX_VALUE);
                     try {
-                        FileOutputStream fileOut = new FileOutputStream("admin.txt");
+                        FileOutputStream fileOut = new FileOutputStream(new File("admin.txt"), true);
                         ObjectOutputStream out = new ObjectOutputStream(fileOut);
                         out.writeObject(user);
                         out.close();
                         fileOut.close();
-                        errorLabel.setText("User registered successfully!");
-
+                        errorLabelSU.setText("User registered successfully!");
                         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
                         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         Scene scene = new Scene(root);
@@ -190,10 +210,10 @@ public class HelloController {
                         stage.setTitle("Expanse Tracker");
                         stage.show();
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        System.out.println("admin file not found");
                     }
                     catch (Exception e){
-                        e.printStackTrace();
+                        System.out.println(e);
                     }
                 } else {
                     errorLabelSU.setText("Passwords do not match!");
