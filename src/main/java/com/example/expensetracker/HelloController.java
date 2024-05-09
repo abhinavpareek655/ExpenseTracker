@@ -43,6 +43,10 @@ class User implements Serializable {
     public String getPassword() {
         return password;
     }
+    public int getBudget(){ return budget; }
+    public void setBudget(int budget){
+        this.budget = budget;
+    }
 }
 class Expense implements Serializable{
     private String category;
@@ -111,6 +115,8 @@ public class HelloController{
     TextField passwordFieldSU;
     @FXML
     TextField confirmPasswordFieldSU;
+    @FXML
+    Label budgetWarning;
     private static String otp;
     public String generateOTP(){
         int[][] randomRanges = {{48,57},{65,90},{97,122}};
@@ -338,42 +344,33 @@ public class HelloController{
             if(isUserExist(userName)){
                 ArrayList<User> users = new ArrayList<>();
 
-// Read users from admin.txt
-try (FileInputStream fileIn = new FileInputStream("admin.txt");
-     ObjectInputStream in = new ObjectInputStream(fileIn)) {
-    while (true) {
-        try {
-            User readUser = (User) in.readObject();
-            users.add(readUser);
-        } catch (EOFException e) {
-            // End of file reached
-            break;
-        }
-    }
-} catch (IOException | ClassNotFoundException e) {
-    e.printStackTrace();
-}
+                // Read users from admin.txt
+                try (FileInputStream fileIn = new FileInputStream("admin.txt");
+                     ObjectInputStream in = new ObjectInputStream(fileIn)) {
+                    while (true) {
+                        try {
+                            User readUser = (User) in.readObject();
+                            users.add(readUser);
+                        } catch (EOFException e) {
+                            // End of file reached
+                            break;
+                        }
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-// Write users back to admin.txt, excluding the one with the same username as userName
-try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
-     ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
-    for (User user : users) {
-        if (!user.getUsername().equals(userName)) {
-            out.writeObject(user);
-        }
-    }
-} catch (IOException e) {
-    e.printStackTrace();
-}
-
-
-//                if(adminFile.delete()){
-//                    if(!tempFile.renameTo(adminFile)){
-//                        System.out.println("Could not rename file");
-//                    }
-//                } else {
-//                    System.out.println("Could not delete file");
-//                }
+                // Write users back to admin.txt, excluding the one with the same username as userName
+                try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
+                     ObjectOutputStream out = new ObjectOutputStream(fileOut)) {
+                    for (User user : users) {
+                        if (!user.getUsername().equals(userName)) {
+                            out.writeObject(user);
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
                 Parent root = FXMLLoader.load(getClass().getResource("SignUpPage.fxml"));
                 stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -644,10 +641,15 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
         return totalExpenses;
     }
     public void showMonthlyExpense(ActionEvent actionEvent){
+        int budget = SetBudget.budget;
+        int currentExpenses = calculateTotalExpenses(userName);
         try {
-            monthlyExpense.setText("₹ "+Integer.toString(calculateTotalExpenses(userName)));
+            monthlyExpense.setText("₹ "+currentExpenses+" of ₹ "+budget);
         }catch (Exception e){
             System.out.println(e);
+        }
+        if(currentExpenses>=budget){
+            budgetWarning.setText("Budget Limit Exceeded!");
         }
     }
     public void onMothlyExpensesButton(ActionEvent actionEvent){
@@ -660,6 +662,19 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+    public void setBudgetButton(ActionEvent actionEvent){
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource("SetBudget.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (Exception e){
+            System.out.println("setBudgetButton: "+e);
         }
     }
 }
