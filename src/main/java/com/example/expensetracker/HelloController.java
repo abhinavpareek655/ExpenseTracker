@@ -62,7 +62,13 @@ class Expense implements Serializable{
                 ", amount='" + amount + '\'' +
                 "}\n";
     }
+    public Date getDate(){
+        return this.date;
+    }
 
+    public int getAmount() {
+        return amount;
+    }
 }
 class AppendableObjectOutputStream extends ObjectOutputStream {
     public AppendableObjectOutputStream(OutputStream out) throws IOException {
@@ -81,6 +87,8 @@ public class HelloController{
     private static FileOutputStream userFile;
     private static Expense expense;
     private Stage stage;
+    @FXML
+    Label monthlyExpense;
     @FXML
     Label NumberFormatExceptionLabel;
     @FXML
@@ -202,7 +210,8 @@ public class HelloController{
                 boolean loginStatus = login(email, password);
                 if (loginStatus) {
                     try {
-                        userFile = new FileOutputStream(getUsername(email)+".txt");
+                        userName = getUsername(email);
+                        userFile = new FileOutputStream(userName+".txt",true);
                         Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
                         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         Scene scene = new Scene(root);
@@ -477,10 +486,15 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
     public void EntertainmentButton(ActionEvent actionEvent){
         try {
             int amount = Integer.parseInt(amountField.getText());
-            expense = new Expense("Entertainment",new Date(),amount);
-            ObjectOutputStream out = new ObjectOutputStream(userFile);
-            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
-            OS.writeObject(expense);
+            expense = new Expense("entertainment",new Date(),amount);
+            boolean append = new File("admin.txt").length() > 0;
+//            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
+            ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
+            expense = new Expense("travel",new Date(),amount);
+            System.out.println("object added");
+            System.out.println(expense);
+            out.writeObject(expense);
+            out.close();
             Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -494,13 +508,19 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
         catch (Exception e) {
             e.printStackTrace();
         }
-    }public void EducationButton(ActionEvent actionEvent){
+    }
+    public void EducationButton(ActionEvent actionEvent){
         try {
             int amount = Integer.parseInt(amountField.getText());
-            expense = new Expense("Education",new Date(),amount);
-            ObjectOutputStream out = new ObjectOutputStream(userFile);
-            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
-            OS.writeObject(expense);
+            expense = new Expense("Travel",new Date(),amount);
+            boolean append = new File("admin.txt").length() > 0;
+//            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
+            ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
+            expense = new Expense("education",new Date(),amount);
+            System.out.println("object added");
+            System.out.println(expense);
+            out.writeObject(expense);
+            out.close();
             Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -518,10 +538,15 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
     public void FoodButton(ActionEvent actionEvent){
         try {
             int amount = Integer.parseInt(amountField.getText());
-            expense = new Expense("Food",new Date(),amount);
-            ObjectOutputStream out = new ObjectOutputStream(userFile);
-            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
-            OS.writeObject(expense);
+            expense = new Expense("Travel",new Date(),amount);
+            boolean append = new File("admin.txt").length() > 0;
+//            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
+            ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
+            expense = new Expense("food",new Date(),amount);
+            System.out.println("object added");
+            System.out.println(expense);
+            out.writeObject(expense);
+            out.close();
             Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -539,10 +564,15 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
     public void HealthButton(ActionEvent actionEvent){
         try {
             int amount = Integer.parseInt(amountField.getText());
-            expense = new Expense("Health",new Date(),amount);
-            ObjectOutputStream out = new ObjectOutputStream(userFile);
-            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
-            OS.writeObject(expense);
+            expense = new Expense("Travel",new Date(),amount);
+            boolean append = new File("admin.txt").length() > 0;
+//            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
+            ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
+            expense = new Expense("health",new Date(),amount);
+            System.out.println("object added");
+            System.out.println(expense);
+            out.writeObject(expense);
+            out.close();
             Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -561,9 +591,14 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
         try {
             int amount = Integer.parseInt(amountField.getText());
             expense = new Expense("Travel",new Date(),amount);
-            ObjectOutputStream out = new ObjectOutputStream(userFile);
-            AppendableObjectOutputStream OS = new AppendableObjectOutputStream(out);
-            OS.writeObject(expense);
+            boolean append = new File("admin.txt").length() > 0;
+//            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
+            ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
+            expense = new Expense("travel",new Date(),amount);
+            System.out.println("object added");
+            System.out.println(expense);
+            out.writeObject(expense);
+            out.close();
             Parent root = FXMLLoader.load(getClass().getResource("MainPage.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
@@ -576,6 +611,59 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
         }
         catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+//    public static void TravelButton(int amount,boolean append){
+//        try {
+//            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
+//            ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
+//            expense = new Expense("travel",new Date(),amount);
+//            System.out.println("object added");
+//            System.out.println(expense);
+//            out.writeObject(expense);
+//            out.close();
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+    public int calculateTotalExpenses(String username) {
+        int totalExpenses = 0;
+
+        // Get the first day of the current month and today's date
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.DAY_OF_MONTH, 1);
+        Date firstDayOfMonth = cal.getTime();
+        Date today = new Date();
+
+        try (FileInputStream fileIn = new FileInputStream(username+".txt");
+             ObjectInputStream in = new ObjectInputStream(fileIn)) {
+            while (true) {
+                try {
+                    Expense expense = (Expense) in.readObject();
+                    Date expenseDate = expense.getDate();
+                    System.out.println(expense);
+                    // Check if the date of the expense is within the desired range
+                    if (!expenseDate.before(firstDayOfMonth) && !expenseDate.after(today)) {
+                        totalExpenses += expense.getAmount();
+                    }
+                } catch (EOFException e) {
+                    // End of file reached
+                    break;
+                }
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return totalExpenses;
+    }
+    public void showMonthlyExpense(ActionEvent actionEvent){
+        try {
+//            System.out.println(userName);
+//            System.out.println(calculateTotalExpenses(userName));
+            monthlyExpense.setText("₹ "+Integer.toString(calculateTotalExpenses(userName)));
+        }catch (Exception e){
+            System.out.println(e);
         }
     }
 }
