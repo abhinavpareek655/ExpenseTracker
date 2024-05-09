@@ -83,10 +83,10 @@ class AppendableObjectOutputStream extends ObjectOutputStream {
 }
 public class HelloController{
     private static User user;
-    private static String userName;
+    protected static String userName;
     private static FileOutputStream userFile;
     private static Expense expense;
-    private Stage stage;
+    protected static Stage stage;
     @FXML
     Label monthlyExpense;
     @FXML
@@ -196,7 +196,6 @@ public class HelloController{
             return false;
         }
     }
-
     public void onLoginButton(ActionEvent actionEvent){
         if(!emailField.getText().isEmpty()) {
             if (!emailField.getText().contains("@"))
@@ -614,20 +613,6 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
             e.printStackTrace();
         }
     }
-//    public static void TravelButton(int amount,boolean append){
-//        try {
-//            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
-//            ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
-//            expense = new Expense("travel",new Date(),amount);
-//            System.out.println("object added");
-//            System.out.println(expense);
-//            out.writeObject(expense);
-//            out.close();
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
     public int calculateTotalExpenses(String username) {
         int totalExpenses = 0;
 
@@ -660,11 +645,21 @@ try (FileOutputStream fileOut = new FileOutputStream("admin.txt");
     }
     public void showMonthlyExpense(ActionEvent actionEvent){
         try {
-//            System.out.println(userName);
-//            System.out.println(calculateTotalExpenses(userName));
             monthlyExpense.setText("₹ "+Integer.toString(calculateTotalExpenses(userName)));
         }catch (Exception e){
             System.out.println(e);
+        }
+    }
+    public void onMothlyExpensesButton(ActionEvent actionEvent){
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("MonthlyExpensesPage.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

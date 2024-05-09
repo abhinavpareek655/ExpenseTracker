@@ -10,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.HelloController">
    <children>
-      <Button layoutX="54.0" layoutY="48.0" mnemonicParsing="false" text="Total Expenses of this month: ">
+      <Button layoutX="54.0" layoutY="48.0" mnemonicParsing="false" onAction="#onMothlyExpensesButton" text="Total Expenses of this month: ">
          <font>
             <Font size="16.0" />
          </font>
@@ -45,5 +45,10 @@
         </yAxis>
       </BarChart>
       <Button layoutX="470.0" layoutY="53.0" mnemonicParsing="false" onAction="#showMonthlyExpense" prefHeight="26.0" prefWidth="58.0" text="Show" />
+      <Button layoutX="358.0" layoutY="155.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="232.0" text="Categorized Expenses">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
