@@ -35,6 +35,5 @@
          </font>
       </Button>
       <Label fx:id="budgetWarning" alignment="CENTER" layoutX="286.0" layoutY="17.0" prefHeight="18.0" prefWidth="239.0" textFill="#c70000" />
-      <Label fx:id="myLabel" layoutX="311.0" layoutY="316.0" text="Label" />
    </children>
 </AnchorPane>

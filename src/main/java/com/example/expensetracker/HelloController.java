@@ -107,7 +107,6 @@ public class HelloController{
     Label NumberFormatExceptionLabel;
     @FXML
     TextField amountField;
-
     @FXML
     TextField OTPField;
     @FXML
