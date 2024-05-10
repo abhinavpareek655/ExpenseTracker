@@ -8,6 +8,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -29,6 +33,12 @@ public class CategorizedExpensesButton implements Initializable {
     int totalFood = 0;
     int totalHealth = 0;
     int totalTravel = 0;
+    @FXML
+    BarChart<?,?> barChart;
+    @FXML
+    CategoryAxis x;
+    @FXML
+    NumberAxis y;
 
     @FXML
      Label entertainment;
@@ -105,6 +115,16 @@ public class CategorizedExpensesButton implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         set();
+        setTotal();
+        barChart.setTitle("Categorized Expenses");
+        XYChart.Series set1 = new XYChart.Series<>();
+        set1.getData().add(new XYChart.Data("Entertainment", totalEntertainment));
+        set1.getData().add(new XYChart.Data("Education", totalEducation));
+        set1.getData().add(new XYChart.Data("Food", totalFood));
+        set1.getData().add(new XYChart.Data("Health", totalHealth));
+        set1.getData().add(new XYChart.Data("Travel", totalTravel));
+
+        barChart.getData().add(set1);
     }
 
     public void backToHome(ActionEvent actionEvent){

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -8,17 +11,17 @@
 
 <AnchorPane prefHeight="626.0" prefWidth="958.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.expensetracker.CategorizedExpensesButton">
    <children>
-      <ListView fx:id="entertainmentList" layoutX="14.0" layoutY="182.0" prefHeight="354.0" prefWidth="174.0" />
-      <ListView fx:id="educationList" layoutX="199.0" layoutY="182.0" prefHeight="354.0" prefWidth="174.0" />
-      <ListView fx:id="foodList" layoutX="386.0" layoutY="182.0" prefHeight="354.0" prefWidth="174.0" />
-      <ListView fx:id="healthList" layoutX="575.0" layoutY="182.0" prefHeight="354.0" prefWidth="174.0" />
-      <ListView fx:id="travelList" layoutX="764.0" layoutY="182.0" prefHeight="354.0" prefWidth="174.0" />
-      <Label layoutX="63.0" layoutY="153.0" text="Entertainment" />
-      <Label layoutX="459.0" layoutY="153.0" text="Food" />
-      <Label layoutX="260.0" layoutY="153.0" text="Education" />
-      <Label layoutX="833.0" layoutY="154.0" text="Travel" />
-      <Label layoutX="644.0" layoutY="154.0" text="Health" />
-      <Label layoutX="357.0" layoutY="67.0" text="Catagorized Expenses">
+      <ListView fx:id="entertainmentList" layoutX="14.0" layoutY="311.0" prefHeight="225.0" prefWidth="174.0" />
+      <ListView fx:id="educationList" layoutX="199.0" layoutY="310.0" prefHeight="226.0" prefWidth="174.0" />
+      <ListView fx:id="foodList" layoutX="386.0" layoutY="310.0" prefHeight="226.0" prefWidth="174.0" />
+      <ListView fx:id="healthList" layoutX="575.0" layoutY="310.0" prefHeight="226.0" prefWidth="174.0" />
+      <ListView fx:id="travelList" layoutX="764.0" layoutY="310.0" prefHeight="226.0" prefWidth="174.0" />
+      <Label layoutX="63.0" layoutY="279.0" text="Entertainment" />
+      <Label layoutX="459.0" layoutY="279.0" text="Food" />
+      <Label layoutX="260.0" layoutY="279.0" text="Education" />
+      <Label layoutX="835.0" layoutY="279.0" text="Travel" />
+      <Label layoutX="645.0" layoutY="279.0" text="Health" />
+      <Label layoutX="357.0" layoutY="36.0" text="Catagorized Expenses">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
@@ -29,6 +32,13 @@
       <Label fx:id="food" alignment="CENTER" layoutX="386.0" layoutY="554.0" prefHeight="18.0" prefWidth="174.0" />
       <Label fx:id="health" alignment="CENTER" layoutX="576.0" layoutY="554.0" prefHeight="18.0" prefWidth="174.0" />
       <Label fx:id="travel" layoutX="766.0" layoutY="554.0" prefHeight="18.0" prefWidth="174.0" />
-      <Button layoutX="435.0" layoutY="586.0" mnemonicParsing="false" onAction="#setTotal" text="Show Total" />
+      <BarChart fx:id="barChart" layoutX="205.0" layoutY="85.0" prefHeight="189.0" prefWidth="507.0">
+        <xAxis>
+          <CategoryAxis side="BOTTOM" fx:id="x" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="y" side="LEFT" />
+        </yAxis>
+      </BarChart>
    </children>
 </AnchorPane>
