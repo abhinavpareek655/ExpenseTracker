@@ -23,7 +23,13 @@ import java.util.ResourceBundle;
 
 public class CategorizedExpensesButton implements Initializable {
     String userName = HelloController.userName;
-     Stage stage = HelloController.stage;
+    Stage stage = HelloController.stage;
+    int totalEntertainment = 0;
+    int totalEducation = 0;
+    int totalFood = 0;
+    int totalHealth = 0;
+    int totalTravel = 0;
+
     @FXML
      Label entertainment;
     @FXML
@@ -114,5 +120,26 @@ public class CategorizedExpensesButton implements Initializable {
             System.out.println("setBudgetButton: "+e);
         }
     }
-
+    public void setTotal(){
+        for(Expense expense: entertainmentData){
+            totalEntertainment += expense.getAmount();
+        }
+        for(Expense expense: educationData){
+            totalEducation += expense.getAmount();
+        }
+        for(Expense expense: foodData){
+            totalFood += expense.getAmount();
+        }
+        for(Expense expense: healthData){
+            totalHealth += expense.getAmount();
+        }
+        for(Expense expense: travelData){
+            totalTravel += expense.getAmount();
+        }
+        entertainment.setText("Total: "+totalEntertainment);
+        education.setText("Total: "+totalEducation);
+        food.setText("Total: "+totalFood);
+        health.setText("Total: "+totalHealth);
+        travel.setText("Total: "+totalTravel);
+    }
 }

@@ -24,11 +24,11 @@
          </font>
       </Label>
       <Button layoutX="63.0" layoutY="72.0" mnemonicParsing="false" onAction="#backToHome" text="Back to Home" />
-      <Label fx:id="entertainment" layoutX="87.0" layoutY="554.0" text="Label" />
-      <Label fx:id="education" layoutX="272.0" layoutY="554.0" text="Label" />
-      <Label fx:id="food" layoutX="459.0" layoutY="554.0" text="Label" />
-      <Label fx:id="health" layoutX="648.0" layoutY="554.0" text="Label" />
-      <Label fx:id="travel" layoutX="837.0" layoutY="554.0" text="Label" />
-      <Button layoutX="435.0" layoutY="586.0" mnemonicParsing="false" text="Show Total" />
+      <Label fx:id="entertainment" alignment="CENTER" layoutX="13.0" layoutY="554.0" prefHeight="18.0" prefWidth="174.0" />
+      <Label fx:id="education" alignment="CENTER" layoutX="199.0" layoutY="554.0" prefHeight="18.0" prefWidth="174.0" />
+      <Label fx:id="food" alignment="CENTER" layoutX="386.0" layoutY="554.0" prefHeight="18.0" prefWidth="174.0" />
+      <Label fx:id="health" alignment="CENTER" layoutX="576.0" layoutY="554.0" prefHeight="18.0" prefWidth="174.0" />
+      <Label fx:id="travel" layoutX="766.0" layoutY="554.0" prefHeight="18.0" prefWidth="174.0" />
+      <Button layoutX="435.0" layoutY="586.0" mnemonicParsing="false" onAction="#setTotal" text="Show Total" />
    </children>
 </AnchorPane>
