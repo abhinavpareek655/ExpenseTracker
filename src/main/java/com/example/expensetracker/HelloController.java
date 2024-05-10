@@ -49,6 +49,7 @@ class User implements Serializable {
     }
 }
 class Expense implements Serializable{
+    private static final long serialVersionUID = 7052176155430362228L;
     private String category;
     private Date date;
     private int amount;
@@ -72,6 +73,10 @@ class Expense implements Serializable{
 
     public int getAmount() {
         return amount;
+    }
+
+    public String getCategory(){
+        return category;
     }
 }
 class AppendableObjectOutputStream extends ObjectOutputStream {
@@ -486,7 +491,6 @@ public class HelloController{
             boolean append = new File("admin.txt").length() > 0;
 //            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
             ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
-            expense = new Expense("travel",new Date(),amount);
             System.out.println("object added");
             System.out.println(expense);
             out.writeObject(expense);
@@ -508,7 +512,6 @@ public class HelloController{
     public void EducationButton(ActionEvent actionEvent){
         try {
             int amount = Integer.parseInt(amountField.getText());
-            expense = new Expense("Travel",new Date(),amount);
             boolean append = new File("admin.txt").length() > 0;
 //            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
             ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
@@ -534,7 +537,6 @@ public class HelloController{
     public void FoodButton(ActionEvent actionEvent){
         try {
             int amount = Integer.parseInt(amountField.getText());
-            expense = new Expense("Travel",new Date(),amount);
             boolean append = new File("admin.txt").length() > 0;
 //            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
             ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
@@ -560,7 +562,6 @@ public class HelloController{
     public void HealthButton(ActionEvent actionEvent){
         try {
             int amount = Integer.parseInt(amountField.getText());
-            expense = new Expense("Travel",new Date(),amount);
             boolean append = new File("admin.txt").length() > 0;
 //            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
             ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
@@ -586,7 +587,6 @@ public class HelloController{
     public void TravelButton(ActionEvent actionEvent){
         try {
             int amount = Integer.parseInt(amountField.getText());
-            expense = new Expense("Travel",new Date(),amount);
             boolean append = new File("admin.txt").length() > 0;
 //            FileOutputStream userFile = new FileOutputStream(new File("abhinavpareek655.txt"), true);
             ObjectOutputStream out = append ? new AppendableObjectOutputStream(userFile) : new ObjectOutputStream(userFile);
@@ -667,6 +667,19 @@ public class HelloController{
     public void setBudgetButton(ActionEvent actionEvent){
         try{
             Parent root = FXMLLoader.load(getClass().getResource("SetBudget.fxml"));
+            stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.setTitle("Expanse Tracker");
+            stage.show();
+        }
+        catch (Exception e){
+            System.out.println("setBudgetButton: "+e);
+        }
+    }
+    public void categorizedExpensesButton(ActionEvent actionEvent){
+        try{
+            Parent root = FXMLLoader.load(getClass().getResource("CategorizedExpensesPage.fxml"));
             stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root);
             stage.setScene(scene);

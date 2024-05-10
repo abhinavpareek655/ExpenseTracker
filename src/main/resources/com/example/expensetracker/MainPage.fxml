@@ -40,7 +40,7 @@
         </yAxis>
       </BarChart>
       <Button layoutX="527.0" layoutY="53.0" mnemonicParsing="false" onAction="#showMonthlyExpense" prefHeight="26.0" prefWidth="58.0" text="Show" />
-      <Button layoutX="358.0" layoutY="155.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="232.0" text="Categorized Expenses">
+      <Button layoutX="358.0" layoutY="155.0" mnemonicParsing="false" onAction="#categorizedExpensesButton" prefHeight="38.0" prefWidth="232.0" text="Categorized Expenses">
          <font>
             <Font size="16.0" />
          </font>
